@@ -1,4 +1,6 @@
-﻿namespace Ista.Consola {
+﻿using Ista.Comunes;
+
+namespace Ista.Consola {
     public abstract class Persona {
         private string nombre;
 
@@ -51,6 +53,8 @@
             p.Dime();
             Console.WriteLine(p.Nombre);
             //p.Add();
+            Demo demo = new Demo();
+            Console.WriteLine(demo.Saluda());
         }
     }
 }
