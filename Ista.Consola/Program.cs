@@ -17,6 +17,9 @@ namespace Ista.Consola {
             }
         }
         public bool EsConflictivo { get; }
+
+        public Decimal Salario { get; set; }
+
         #endregion
         #region Métodos
 
@@ -29,6 +32,10 @@ namespace Ista.Consola {
         }
 
         public abstract void DebeSobreescribir();
+
+        public string DameId() {
+            return nameof(Id); // "Id";
+        }
         #endregion
     }
 
@@ -43,6 +50,10 @@ namespace Ista.Consola {
         }
         public void Add() {
             Console.WriteLine("Propio del Hijo");
+        }
+        public Persona Add(decimal p) {
+            Salario = Salario + p;
+            return this;
         }
         /// <summary>
         /// 
@@ -62,7 +73,7 @@ namespace Ista.Consola {
             Console.WriteLine("""Hello, World!""");
 #endif
 
-            Persona p = new Alumno();
+            Persona p = new Alumno(), pp =  new Alumno();
             p.Nombre = "algo";
 #if DEBUG
             Console.WriteLine(p.Nombre);
@@ -71,6 +82,7 @@ namespace Ista.Consola {
 #endif
 #pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
             (p as Alumno).Add();
+            ((Alumno)p).Add();
 #pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
             p.Dime();
             Console.WriteLine(p.Nombre);
@@ -79,8 +91,8 @@ namespace Ista.Consola {
             Console.WriteLine(demo.Saluda(""));
             Console.WriteLine(0.1M+(decimal)0.2);
             Console.WriteLine(1m-0.9m == 0.1m);
-            int div = 0;
-            Console.WriteLine((1 / div) * 0);
+            int div = 2;
+            Console.WriteLine(1 / div);
             Object o = 4; // new Int32(4)
             int? i = (int)o; // o.value()
             i = null;
@@ -88,8 +100,38 @@ namespace Ista.Consola {
                 Nullable<int> j = i.Value + 1;
             }
 
-            long l = 99999999999;
-            int kk =(int) l;
+            long l = 99999;
+            int kk =checked((int) l);
+            char a = 'a';
+            a = (char)(a + l);
+            Console.WriteLine((char)('a' - 32));
+            if(int.MaxValue > l) {
+                i = unchecked((int)l);
+            }
+            Console.WriteLine((double)l / 7);
+            if(string.IsNullOrEmpty(p.Nombre) && p.Nombre == "kk") {
+            }
+            if("kk".Equals(p.Nombre)) {
+            }
+            pp = p;
+            if(p.Nombre == pp.Nombre && p.Nombre.Equals(pp.Nombre)) {
+
+            }
+            String? cad = null;
+            cad = p != null ? p.Nombre : null;
+            cad = p != null && p.Nombre != null ? p.Nombre.ToUpper() : null;
+            cad = p?.Nombre?.ToUpper();
+            cad = cad?.ToLower();
+            cad = p != null && p.Nombre != null ? p.Nombre : "(anonimo)";
+            cad = p?.Nombre ?? "(anonimo)";
+
+            if(p == pp && p.Equals(pp)) {
+
+            }
+            p = (p as Alumno).Add(5m); // p + 5;
+            int x = 1, y = 1, z = 1;
+            x = y = z = 0;
+
         }
     }
 }
