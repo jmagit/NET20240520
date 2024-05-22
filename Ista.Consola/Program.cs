@@ -1,7 +1,8 @@
 ﻿using Ista.Comunes;
+using System.Text;
 
 namespace Ista.Consola {
-    public abstract class Persona {
+    public abstract class Persona : IDisposable {
         #region Atributos
         private string nombre;
         #endregion
@@ -35,6 +36,10 @@ namespace Ista.Consola {
 
         public string DameId() {
             return nameof(Id); // "Id";
+        }
+
+        public void Dispose() {
+            // libero;
         }
         #endregion
     }
@@ -73,7 +78,11 @@ namespace Ista.Consola {
             Console.WriteLine("""Hello, World!""");
 #endif
 
-            Persona p = new Alumno(), pp =  new Alumno();
+            Persona p = new Alumno(),pp =  new Alumno();
+            using(Persona profe = new Alumno()) {
+                profe.Add();
+            }
+            
             p.Nombre = "algo";
 #if DEBUG
             Console.WriteLine(p.Nombre);
@@ -115,7 +124,7 @@ namespace Ista.Consola {
             }
             pp = p;
             if(p.Nombre == pp.Nombre && p.Nombre.Equals(pp.Nombre)) {
-
+                using Persona profe = new Alumno();
             }
             String? cad = null;
             cad = p != null ? p.Nombre : null;
@@ -129,9 +138,21 @@ namespace Ista.Consola {
 
             }
             p = (p as Alumno).Add(5m); // p + 5;
-            int x = 1, y = 1, z = 1;
-            x = y = z = 0;
+            //int x = 1, y = 1, z = 1;
+            //x = y = z = 0;
 
+            //Alumno x = new();
+            dynamic x = new Alumno();
+            x.kkkkk();
+            //x = 1.0;
+            StringBuilder sb = new StringBuilder("Cad");
+            for(int ele = 0; ele < 10; ele++) {
+                cad += "x";
+                sb.Append("x");
+            }
+            cad = sb.ToString();
+            //p.Dispose();
+            //p.Add();
         }
     }
 }
