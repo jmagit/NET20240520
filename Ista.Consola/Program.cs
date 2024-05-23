@@ -17,7 +17,7 @@ namespace Ista.Consola {
             #endregion
             #region Propiedades
             public int Id { get; set; }
-            public string Nombre {
+            public string? Nombre {
                 get {
                     return nombre?.ToLower();
                 }
@@ -26,13 +26,17 @@ namespace Ista.Consola {
                     nombre = value;
                 }
             }
-            public bool EsConflictivo { get; }
+            public bool EsConflictivo { get; } = true;
 
             public Decimal Salario { get; set; }
 
             #endregion
             #region Métodos
+            public Persona() {}
 
+            public Persona(string nombre) {
+                this.nombre = nombre;
+            }
             public virtual void Dime() {
                 Console.WriteLine("Soy el padre");
 
@@ -65,6 +69,10 @@ namespace Ista.Consola {
             }
             #endregion
 
+            public static Decimal operator * (Persona p, int cantidad) {
+                return p.Salario * cantidad;
+            }
+
         }
 
 #if DEBUG
@@ -73,6 +81,10 @@ namespace Ista.Consola {
     private
 #endif
         class Alumno : Persona, ICalcula, IContable {
+            public Alumno(): this("Alumno") { 
+            }
+            public Alumno(string nombre) : base(nombre) { 
+            }
             public override void Dime() {
                 Console.WriteLine("Soy el Hijo");
             }
@@ -122,12 +134,21 @@ namespace Ista.Consola {
             public override void DebeSobreescribir() {
                 throw new NotImplementedException();
             }
+            public int Suma(int i, int j) {
+                return i + j;
+            }
+            public int Calcula(int i, int j, Operacion func) {
+                return func(i, j);
+            }
         }
 
         public class Direccion {
             public string Calle { get; set; }
         }
     }
+
+    public delegate int Operacion(int i, int j);
+
     public class App {
         static void Main(string[] args) {
 #if MODO
@@ -152,8 +173,9 @@ namespace Ista.Consola {
             p.Dime();
             Console.WriteLine(p.Nombre);
             //p.Add();
-            Demo demo = new Demo();
-            Console.WriteLine(demo.Saluda(""));
+            //Demo demo = new Demo();
+            Demo demo = Demo.Create();
+            Console.WriteLine(Demo.Saluda(""));
             Console.WriteLine(0.1M + (decimal)0.2);
             Console.WriteLine(1m - 0.9m == 0.1m);
             int div = 2;
@@ -220,15 +242,26 @@ namespace Ista.Consola {
             punto2 = punto;
             punto = (x: 12, Y: 10);
             Console.WriteLine(punto == punto2 ? "Iguales" : "Distintos");
-            Alumno alumno = new();
+            Alumno alumno = new Alumno { Id = 1, Nombre = "PP", Salario = 1000m };
             cad = "algo";
             string? result = alumno.Add(saludo: "hola", algo: ref cad);
             Console.WriteLine(cad);
             if(result != null) { }
             Console.WriteLine((alumno as ICalcula).Avg(1, 2, 3));
             Console.WriteLine((alumno as IContable).Avg(1));
+            Console.WriteLine(alumno * 3);
             //Console.WriteLine(alumno.Avg(1, [1, 2, 3]));
             //Console.WriteLine(alumno.Avg2(new Double[] { 1, 2, 3 }));
+
+            Operacion func = alumno.Suma;
+            Console.WriteLine(func(2, 2));
+            func = (a, b) => a - b;
+            //func = delegate(a, b) { return a - b; };
+
+            Console.WriteLine(func(2, 2));
+            Console.WriteLine(alumno.Calcula(2,3, alumno.Suma));
+            Console.WriteLine(alumno.Calcula(2,3, func));
+
         }
     }
 }

@@ -8,8 +8,12 @@ namespace Ista.Consola.Entidades;
 
 public enum SituacionLaboral { Activo = 1, DeBaja, Parado, Jubilado }
 
-public class Profesor {
+public class Profesor: Persona {
     public SituacionLaboral Situación { get; set; } = SituacionLaboral.Activo;
+
+    public override void DebeSobreescribir() {
+        throw new NotImplementedException();
+    }
 }
 
 public class Factura {
