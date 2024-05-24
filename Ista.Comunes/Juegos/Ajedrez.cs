@@ -4,10 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ista.Comunes.Juegos
-{
-    public class Pieza
-    {
+namespace Ista.Comunes.Juegos {
+    /// <summary>
+    /// Enumeración con los posibles colores de las piezas: Blanco y Negro.
+    /// </summary>
+    public enum Color {
+        Blanco,
+        Negro
+    }
+
+    public class Pieza {
 
     }
     /// <summary>
@@ -19,7 +25,7 @@ namespace Ista.Comunes.Juegos
         /// </summary>
         /// <param name="fila">Fila de la posición.</param><param name="columna">Columna de la posición.</param>
         public Posicion(int fila, int columna) {
-            if(fila is (<1 or >8)) throw new ArgumentOutOfRangeException(nameof(fila));
+            if(fila is (< 1 or > 8)) throw new ArgumentOutOfRangeException(nameof(fila));
             if(columna < 1 || columna > 8) throw new ArgumentOutOfRangeException(nameof(columna));
 
             this.fila = fila;
@@ -107,40 +113,31 @@ namespace Ista.Comunes.Juegos
     }
 
 
-    public class Tablero
-    {
+    public class Tablero {
         private Pieza[,] tablero = new Pieza[8, 8];
         //private Dictionary<(int fila, int columna), Pieza> tablero = new ();
 
-        public Pieza this[int fila, int columna]
-        {
-            get
-            {
+        public Pieza this[int fila, int columna] {
+            get {
                 return tablero[fila - 1, columna - 1];
             }
-            set
-            {
+            set {
                 tablero[fila - 1, columna - 1] = value;
             }
         }
-        public Pieza this[string notacion]
-        {
-            get
-            {
+        public Pieza this[string notacion] {
+            get {
                 return tablero[0, 0];
             }
-            set
-            {
+            set {
                 tablero[0, 0] = value;
             }
         }
     }
 
-    public class Ajedrez
-    {
+    public class Ajedrez {
         private Tablero tablero;
-        public Ajedrez()
-        {
+        public Ajedrez() {
             tablero = new Tablero();
             tablero[1, 1] = new Pieza();
             tablero["2B"] = new Pieza();
