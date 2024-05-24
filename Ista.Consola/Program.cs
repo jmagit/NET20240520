@@ -1,4 +1,6 @@
 ﻿using Ista.Comunes;
+using Ista.Comunes.Juegos;
+using Ista.Comunes.Juegos.Ajedrez;
 using Ista.Consola.Entidades;
 using System.Reflection;
 using System.Text;
@@ -257,11 +259,42 @@ namespace Ista.Consola {
             Console.WriteLine(func(2, 2));
             func = (a, b) => a - b;
             //func = delegate(a, b) { return a - b; };
+            Func<int, int, bool> pred = (a, b) => a > b;
+            Action<string> pinta = cad => Console.WriteLine($"{cad} => {func(kk, kk)}");
+
+            pinta("9999");
 
             Console.WriteLine(func(2, 2));
             Console.WriteLine(alumno.Calcula(2,3, alumno.Suma));
             Console.WriteLine(alumno.Calcula(2,3, func));
             List<int> list = new List<int>();
+
+            Elemento<int, string> provincia = new(28, "Madrid");
+            // provincia = new("28", "Madrid");
+            ElementoCadena<char> genero = new('H', "Hombre");
+            Elemento<string, string> abre = new("AVG", "Media");
+            var anonimo = new { Id = 1, Nombre = "PP", Salario = 1000m };
+            Console.WriteLine(provincia.GetType().Name);
+            Console.WriteLine(provincia is Elemento<int, string>);
+            Console.WriteLine(provincia is Elemento<string, string>);
+            Console.WriteLine(abre.GetType().Name);
+            Console.WriteLine(abre is Elemento<char, string>);
+            Console.WriteLine(genero.GetType().Name);
+            Console.WriteLine(anonimo.GetType().Name);
+
+            Pieza peon = new Peon(Color.Blanco);
+            (peon as Peon).Promocion += (s, args) => Console.WriteLine("Segundo controlador");
+            (peon as Peon).Promocion += App_Promocion;
+            Pieza dama = new Dama(Color.Blanco);
+            dama.Muevete(new Posicion(1, 1), new Posicion(8, 1));
+            peon.Muevete(new Posicion(7, 1), new Posicion(8, 1));
+            (peon as Peon).Promocion -= App_Promocion;
+            peon.Muevete(new Posicion(7, 1), new Posicion(8, 1));
+        }
+
+        private static void App_Promocion(object sender, PromocionEventArgs e) {
+            Console.WriteLine("Piede tipo de pieza");
+            e.Pieza = new Dama((sender as Peon).Color);
         }
     }
 }
