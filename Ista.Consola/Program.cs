@@ -261,7 +261,7 @@ namespace Ista.Consola {
             Console.WriteLine(func(2, 2));
             Console.WriteLine(alumno.Calcula(2,3, alumno.Suma));
             Console.WriteLine(alumno.Calcula(2,3, func));
-
+            List<int> list = new List<int>();
         }
     }
 }
