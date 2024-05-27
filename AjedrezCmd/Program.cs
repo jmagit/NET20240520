@@ -11,7 +11,7 @@ do {
     PintaTablero(juego.Tablero);
     Console.Write($"Juegan las {(juego.Turno == Color.Blanco ? "BLANCAS" : "NEGRAS")}. Dame movimiento (FIN para terminar): ");
     jugada = Console.ReadLine() ?? "";
-    if(jugada.ToUpper() == "FIN" || "TABLAS".Equals(jugada, StringComparison.CurrentCultureIgnoreCase))
+    if(jugada?.ToUpper() == "FIN" || "TABLAS".Equals(jugada, StringComparison.CurrentCultureIgnoreCase))
         break;
     try {
         juego.Jugada(jugada);

@@ -92,7 +92,7 @@ public class Juego : IJuego {
         partidaActiva = true;
 
 #if DEBUG
-        // Caso de prueba para la promocion
+        // Caso de prueba para la promoción
         tablero[7, 1] = new Peon(Color.Blanco);
         tablero[2, 1] = new Peon(Color.Negro);
 #endif

@@ -10,7 +10,7 @@ namespace Cursos.Juegos {
     /// </summary>
     public class JuegoException : Exception {
         /// <summary>
-        ///  Inicializa una nueva instancia de la clase Ajedrez.JuegoException con un mensaje de error especificado.
+        ///  Inicializa una nueva instancia de la clase Cursos.Juegos.JuegoException con un mensaje de error especificado.
         /// </summary>
         /// <param name="msg">Mensaje que describe el error.</param>
         public JuegoException(String msg) : base(msg) { }

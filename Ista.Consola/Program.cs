@@ -81,7 +81,7 @@ namespace Ista.Consola {
 #if DEBUG
         public
 #else
-    private
+    internal
 #endif
         class Alumno : Persona, ICalcula, IContable {
             public Alumno(): this("Alumno") { 
