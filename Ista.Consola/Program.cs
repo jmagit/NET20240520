@@ -29,7 +29,7 @@ namespace Ista.Consola {
                     nombre = value;
                 }
             }
-            public bool EsConflictivo { get; } = true;
+            public bool EsConflictivo { get; init; } = false;
 
             public Decimal Salario { get; set; }
 
@@ -76,6 +76,9 @@ namespace Ista.Consola {
                 return p.Salario * cantidad;
             }
 
+            public override string? ToString() {
+                return $"{GetType().Name} => Id: {Id} Nombre: {Nombre}";
+            }
         }
 
 #if DEBUG
@@ -155,6 +158,55 @@ namespace Ista.Consola {
 
     public class App {
         static void Main(string[] args) {
+            IList<Persona> lista = new List<Persona>();
+            lista.Add(new Alumno() { Id = 1, Nombre = "Pepito", Salario = 1001 });
+            lista.Add(new Alumno() { Id = 2, Nombre = "Carmelo", Salario = 2000, EsConflictivo = true  });
+            lista.Add(new Profesor() { Id = 3, Nombre = "Profe", Salario = 3000 });
+            lista.Add(new Profesor() { Id = 4, Nombre = "Profe2", Salario = 1500, Situación = SituacionLaboral.DeBaja });
+            lista.Add(new Alumno() { Id = 5, Nombre = "Pepito2", Salario = 1000 });
+            lista.Add(new Alumno() { Id = 6, Nombre = "Carmelo2", Salario = 2000 });
+
+            bool paginar = true, orden = false;
+            int pagina = 0, filas = 2;
+            var consulta = lista.OfType<Alumno>().Where(item => !item.EsConflictivo);
+            if(paginar) {
+                consulta = consulta.Skip(pagina * filas).Take(filas);
+            }
+            if(orden) {
+                consulta = consulta.OrderBy(item => item.Nombre);
+            } else {
+                consulta = consulta.OrderBy(item => item.Salario);
+            }
+            var rslt = consulta.ToList();
+            Console.WriteLine(consulta.FirstOrDefault()?.ToString()??"Ninguna");
+            //consulta = consulta.Select(item => new { Id = item.Id, Nombre = item.Nombre });
+            foreach(var item in rslt) {
+                Console.WriteLine(item);
+            }
+            foreach(var item in lista.OfType<Alumno>()
+                    .Where(item => !item.EsConflictivo)
+                    .Select(item => new { Id = item.Id, Nombre = item.Nombre })
+                    .OrderBy(item => item.Nombre)
+                    ) {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine(lista
+                    .OfType<Profesor>()
+                    .Where(item => item.Situación == SituacionLaboral.Activo)
+                    .Average(item => item.Salario)
+                 );
+            var sql = from p in lista
+                      where p.Salario > 1500
+                      orderby p.Salario
+                      select new { Id = p.Id, Nombre = p.Nombre, Salario = p.Salario };
+            foreach (var item in from p in lista
+                                 where p.Salario > 1500
+                                 orderby p.Salario
+                                 select new { Id = p.Id, Nombre = p.Nombre, Salario = p.Salario }) {
+                Console.WriteLine(item);
+                Console.WriteLine(item.GetType().Name);
+            }
+
 
         }
         static void DemosCSharp(string[] args) {

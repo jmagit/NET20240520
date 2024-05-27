@@ -8,7 +8,7 @@ namespace Cursos.Juegos;
 /// </summary>
 [Serializable()]
 public class Tablero : ICloneable, IEnumerable<KeyValuePair<Posicion, Pieza>> {
-#if !VERSION_1 // Versión: 1.0
+#if VERSION_1 // Versión: 1.0
 
         /// <summary>
         /// Matriz de 8x8 posiciones, que representa al tablero y permite almacenar las piezas del juego.
