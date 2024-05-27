@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Ajedrez\alfilb.gif" />
+    <None Remove="Images\Ajedrez\alfiln.gif" />
+    <None Remove="Images\Ajedrez\caballob.gif" />
+    <None Remove="Images\Ajedrez\caballon.gif" />
+    <None Remove="Images\Ajedrez\damab.gif" />
+    <None Remove="Images\Ajedrez\daman.gif" />
+    <None Remove="Images\Ajedrez\peonb.gif" />
+    <None Remove="Images\Ajedrez\peonn.gif" />
+    <None Remove="Images\Ajedrez\reyb.gif" />
+    <None Remove="Images\Ajedrez\reyn.gif" />
+    <None Remove="Images\Ajedrez\torreb.gif" />
+    <None Remove="Images\Ajedrez\torren.gif" />
+    <None Remove="MBlanco.jpg" />
+    <None Remove="MNegro.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Ajedrez\alfilb.gif" />
+    <Resource Include="Images\Ajedrez\alfiln.gif" />
+    <Resource Include="Images\Ajedrez\caballob.gif" />
+    <Resource Include="Images\Ajedrez\caballon.gif" />
+    <Resource Include="Images\Ajedrez\damab.gif" />
+    <Resource Include="Images\Ajedrez\daman.gif" />
+    <Resource Include="Images\Ajedrez\peonb.gif" />
+    <Resource Include="Images\Ajedrez\peonn.gif" />
+    <Resource Include="Images\Ajedrez\reyb.gif" />
+    <Resource Include="Images\Ajedrez\reyn.gif" />
+    <Resource Include="Images\Ajedrez\torreb.gif" />
+    <Resource Include="Images\Ajedrez\torren.gif" />
+    <Resource Include="Images\MBlanco.jpg" />
+    <Resource Include="Images\MNegro.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cursos.Juegos.Ajedrez\Cursos.Juegos.Ajedrez.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -25,7 +25,7 @@ namespace Ista.Comunes.Juegos {
         private Pieza[,] tablero = new Pieza[8, 8];
         //private Dictionary<(int fila, int columna), Pieza> tablero = new ();
 
-        public Pieza this[int fila, int columna] {
+        public Pieza? this[int fila, int columna] {
             get {
                 return tablero[fila - 1, columna - 1];
             }
@@ -35,6 +35,8 @@ namespace Ista.Comunes.Juegos {
         }
         public Pieza this[string notacion] {
             get {
+                if(tablero[0, 0] == null)
+                    throw new JuegoException("No hay pieza");
                 return tablero[0, 0];
             }
             set {
@@ -50,6 +52,9 @@ namespace Ista.Comunes.Juegos {
             tablero[1, 1] = new Pieza(Color.Blanco);
             tablero["2B"] = new Pieza(Color.Blanco);
             var p = tablero["2B"];
+            //if(p != null) {
+            var kk = p.Color;
+            //}
         }
     }
 }

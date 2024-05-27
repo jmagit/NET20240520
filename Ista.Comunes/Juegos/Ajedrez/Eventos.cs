@@ -53,5 +53,8 @@ public interface IPromocionable {
     event PromocionEventHandler Promocion;
 }
 
+/// <summary>
+/// Indica si un tipo de pieza puede sustituir al peón en la promoción
+/// </summary>
 public interface ISiPuedeSustituirAlPeon { }
 

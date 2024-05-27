@@ -2,6 +2,7 @@
 using Ista.Comunes.Juegos;
 using Ista.Comunes.Juegos.Ajedrez;
 using Ista.Consola.Entidades;
+using Ista.Utilidades;
 using System.Reflection;
 using System.Text;
 
@@ -149,10 +150,14 @@ namespace Ista.Consola {
         }
     }
 
+    [Obsolete]
     public delegate int Operacion(int i, int j);
 
     public class App {
         static void Main(string[] args) {
+
+        }
+        static void DemosCSharp(string[] args) {
 #if MODO
             Console.WriteLine("""Hello, World!""");
 #endif
@@ -169,6 +174,9 @@ namespace Ista.Consola {
             Console.WriteLine("p.Nombre");
 #endif
 #pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+            if(p is Alumno alum) {
+                alum.Add();
+            }
             (p as Alumno).Add();
             ((Alumno)p).Add();
 #pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
@@ -290,6 +298,9 @@ namespace Ista.Consola {
             peon.Muevete(new Posicion(7, 1), new Posicion(8, 1));
             (peon as Peon).Promocion -= App_Promocion;
             peon.Muevete(new Posicion(7, 1), new Posicion(8, 1));
+            if(Validaciones.EsBlanco(alumno.Nombre) && alumno.Nombre.EsMuyLargo(10)) {
+                Console.WriteLine(alumno.Nombre);
+            }
         }
 
         private static void App_Promocion(object sender, PromocionEventArgs e) {
@@ -299,6 +310,18 @@ namespace Ista.Consola {
     }
 }
 namespace Ista.Utilidades {
-    public class Validaciones {
+    public static class Validaciones {
+        public static bool EsBlanco(this string cad) {
+            return string.IsNullOrEmpty(cad?.Trim());
+        }
+        public static bool EsMuyLargo(this string cad, int longMax) {
+            return cad?.Length > longMax;
+        }
+        public static bool NoEsBlanco(this string cad) {
+            return !EsBlanco(cad);
+        }
+        public static bool EsPositivo(this int num) {
+            return num > 0;
+        }
     }
 }

@@ -5,7 +5,17 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ista.Consola", "Ista.Consola\Ista.Consola.csproj", "{C5041979-421C-40A1-850D-F40819715D06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ista.Comunes", "Ista.Comunes\Ista.Comunes.csproj", "{77F9D98A-8A12-4038-94F8-A113960F4F1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ista.Comunes", "Ista.Comunes\Ista.Comunes.csproj", "{77F9D98A-8A12-4038-94F8-A113960F4F1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Juegos", "Juegos", "{D2B206F9-791B-4B52-94B7-C97F20104398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursos.Juegos", "Cursos.Juegos\Cursos.Juegos.csproj", "{2562397F-C1D6-4048-8770-B8719F0A67FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursos.Juegos.Ajedrez", "Cursos.Juegos.Ajedrez\Cursos.Juegos.Ajedrez.csproj", "{43790252-CEE9-46E0-AFA1-EDE1C92EB704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjedrezCmd", "AjedrezCmd\AjedrezCmd.csproj", "{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjedrezWin", "AjedrezWin\AjedrezWin.csproj", "{B613F806-9F0C-41E4-83F2-A85B93F068EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +31,31 @@ Global
 		{77F9D98A-8A12-4038-94F8-A113960F4F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F9D98A-8A12-4038-94F8-A113960F4F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F9D98A-8A12-4038-94F8-A113960F4F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2562397F-C1D6-4048-8770-B8719F0A67FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2562397F-C1D6-4048-8770-B8719F0A67FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2562397F-C1D6-4048-8770-B8719F0A67FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2562397F-C1D6-4048-8770-B8719F0A67FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43790252-CEE9-46E0-AFA1-EDE1C92EB704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43790252-CEE9-46E0-AFA1-EDE1C92EB704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43790252-CEE9-46E0-AFA1-EDE1C92EB704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43790252-CEE9-46E0-AFA1-EDE1C92EB704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2562397F-C1D6-4048-8770-B8719F0A67FE} = {D2B206F9-791B-4B52-94B7-C97F20104398}
+		{43790252-CEE9-46E0-AFA1-EDE1C92EB704} = {D2B206F9-791B-4B52-94B7-C97F20104398}
+		{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34} = {D2B206F9-791B-4B52-94B7-C97F20104398}
+		{B613F806-9F0C-41E4-83F2-A85B93F068EB} = {D2B206F9-791B-4B52-94B7-C97F20104398}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {703C6914-4A1C-4953-9084-2F04D2503B73}
