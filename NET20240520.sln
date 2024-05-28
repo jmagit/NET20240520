@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ista.Comunes", "Ista.Comune
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Juegos", "Juegos", "{D2B206F9-791B-4B52-94B7-C97F20104398}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursos.Juegos", "Cursos.Juegos\Cursos.Juegos.csproj", "{2562397F-C1D6-4048-8770-B8719F0A67FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cursos.Juegos", "Cursos.Juegos\Cursos.Juegos.csproj", "{2562397F-C1D6-4048-8770-B8719F0A67FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursos.Juegos.Ajedrez", "Cursos.Juegos.Ajedrez\Cursos.Juegos.Ajedrez.csproj", "{43790252-CEE9-46E0-AFA1-EDE1C92EB704}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cursos.Juegos.Ajedrez", "Cursos.Juegos.Ajedrez\Cursos.Juegos.Ajedrez.csproj", "{43790252-CEE9-46E0-AFA1-EDE1C92EB704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjedrezCmd", "AjedrezCmd\AjedrezCmd.csproj", "{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AjedrezCmd", "AjedrezCmd\AjedrezCmd.csproj", "{2B8611B3-1B8D-43DB-A9F6-9B0297E77F34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjedrezWin", "AjedrezWin\AjedrezWin.csproj", "{B613F806-9F0C-41E4-83F2-A85B93F068EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AjedrezWin", "AjedrezWin\AjedrezWin.csproj", "{B613F806-9F0C-41E4-83F2-A85B93F068EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ista.Datos", "Ista.Datos\Ista.Datos.csproj", "{ED998B4A-E74A-4D4F-B617-744FB7CDE155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B613F806-9F0C-41E4-83F2-A85B93F068EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED998B4A-E74A-4D4F-B617-744FB7CDE155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED998B4A-E74A-4D4F-B617-744FB7CDE155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED998B4A-E74A-4D4F-B617-744FB7CDE155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED998B4A-E74A-4D4F-B617-744FB7CDE155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
