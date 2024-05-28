@@ -2,6 +2,7 @@
 using Ista.Comunes.Juegos;
 using Ista.Comunes.Juegos.Ajedrez;
 using Ista.Consola.Entidades;
+using Ista.Infraestructura.Datos;
 using Ista.Utilidades;
 using System.Reflection;
 using System.Text;
@@ -35,7 +36,7 @@ namespace Ista.Consola {
 
             #endregion
             #region Métodos
-            public Persona() {}
+            public Persona() { }
 
             public Persona(string nombre) {
                 this.nombre = nombre;
@@ -72,7 +73,7 @@ namespace Ista.Consola {
             }
             #endregion
 
-            public static Decimal operator * (Persona p, int cantidad) {
+            public static Decimal operator *(Persona p, int cantidad) {
                 return p.Salario * cantidad;
             }
 
@@ -87,9 +88,9 @@ namespace Ista.Consola {
     internal
 #endif
         class Alumno : Persona, ICalcula, IContable {
-            public Alumno(): this("Alumno") { 
+            public Alumno() : this("Alumno") {
             }
-            public Alumno(string nombre) : base(nombre) { 
+            public Alumno(string nombre) : base(nombre) {
             }
             public override void Dime() {
                 Console.WriteLine("Soy el Hijo");
@@ -107,7 +108,7 @@ namespace Ista.Consola {
             /// <param name="algo"></param>
             public string Add(ref string algo, string saludo = "Propio del") {
 #if DEBUG
-                if(String.IsNullOrEmpty(algo)) 
+                if(String.IsNullOrEmpty(algo))
                     throw new ArgumentNullException(nameof(algo));
 #endif
                 Console.WriteLine($"{saludo} {algo}");
@@ -158,9 +159,23 @@ namespace Ista.Consola {
 
     public class App {
         static void Main(string[] args) {
+            int pagina = 1, filas = 10;
+            using(var db = new AWContext()) { 
+                foreach(var item in db.Products
+                    .Where(p => p.ProductId < 800)
+                    .OrderBy(p => p.ProductId)
+                    .Skip(pagina * filas)
+                    .Take(filas)
+                    ) {
+                    Console.WriteLine($"{item.ProductId} - {item.Name}");
+                }
+            
+            }
+        }
+        static void Colecciones(string[] args) {
             IList<Persona> lista = new List<Persona>();
             lista.Add(new Alumno() { Id = 1, Nombre = "Pepito", Salario = 1001 });
-            lista.Add(new Alumno() { Id = 2, Nombre = "Carmelo", Salario = 2000, EsConflictivo = true  });
+            lista.Add(new Alumno() { Id = 2, Nombre = "Carmelo", Salario = 2000, EsConflictivo = true });
             lista.Add(new Profesor() { Id = 3, Nombre = "Profe", Salario = 3000 });
             lista.Add(new Profesor() { Id = 4, Nombre = "Profe2", Salario = 1500, Situación = SituacionLaboral.DeBaja });
             lista.Add(new Alumno() { Id = 5, Nombre = "Pepito2", Salario = 1000 });
@@ -178,7 +193,7 @@ namespace Ista.Consola {
                 consulta = consulta.OrderBy(item => item.Salario);
             }
             var rslt = consulta.ToList();
-            Console.WriteLine(consulta.FirstOrDefault()?.ToString()??"Ninguna");
+            Console.WriteLine(consulta.FirstOrDefault()?.ToString() ?? "Ninguna");
             //consulta = consulta.Select(item => new { Id = item.Id, Nombre = item.Nombre });
             foreach(var item in rslt) {
                 Console.WriteLine(item);
@@ -199,10 +214,10 @@ namespace Ista.Consola {
                       where p.Salario > 1500
                       orderby p.Salario
                       select new { Id = p.Id, Nombre = p.Nombre, Salario = p.Salario };
-            foreach (var item in from p in lista
-                                 where p.Salario > 1500
-                                 orderby p.Salario
-                                 select new { Id = p.Id, Nombre = p.Nombre, Salario = p.Salario }) {
+            foreach(var item in from p in lista
+                                where p.Salario > 1500
+                                orderby p.Salario
+                                select new { Id = p.Id, Nombre = p.Nombre, Salario = p.Salario }) {
                 Console.WriteLine(item);
                 Console.WriteLine(item.GetType().Name);
             }
@@ -325,8 +340,8 @@ namespace Ista.Consola {
             pinta("9999");
 
             Console.WriteLine(func(2, 2));
-            Console.WriteLine(alumno.Calcula(2,3, alumno.Suma));
-            Console.WriteLine(alumno.Calcula(2,3, func));
+            Console.WriteLine(alumno.Calcula(2, 3, alumno.Suma));
+            Console.WriteLine(alumno.Calcula(2, 3, func));
             List<int> list = new List<int>();
 
             Elemento<int, string> provincia = new(28, "Madrid");

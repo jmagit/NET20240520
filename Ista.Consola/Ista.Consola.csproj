@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ista.Comunes\Ista.Comunes.csproj" />
+    <ProjectReference Include="..\Ista.Datos\Ista.Datos.csproj" />
   </ItemGroup>
 
 </Project>

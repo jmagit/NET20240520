@@ -40,7 +40,7 @@ public partial class AWContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AdventureWorksLT2019;Persist Security Info=True;User ID=sa;Password=P@$$w0rd");
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AdventureWorksLT2019;Trust Server Certificate=True;Persist Security Info=True;User ID=sa;Password=P@$$w0rd");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
