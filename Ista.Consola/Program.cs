@@ -2,8 +2,10 @@
 using Ista.Comunes.Juegos;
 using Ista.Comunes.Juegos.Ajedrez;
 using Ista.Consola.Entidades;
+using Ista.Dominio.Entidades;
 using Ista.Infraestructura.Datos;
 using Ista.Utilidades;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text;
 
@@ -160,17 +162,55 @@ namespace Ista.Consola {
     public class App {
         static void Main(string[] args) {
             int pagina = 1, filas = 10;
-            using(var db = new AWContext()) { 
+            //using(var db = new AWContext()) {
+            //    foreach(var item in db.Products
+            //        //.Include(p => p.ProductCategory)
+            //        //.AsSplitQuery()
+            //        //.Include(p => p.ProductModel)
+            //        //.ThenInclude(m => m.ProductModelProductDescriptions)
+            //        //.AsSplitQuery()
+            //        .Where(p => p.ProductId < 800)
+            //        .OrderBy(p => p.ProductId)
+            //        .Skip(pagina * filas)
+            //        .Take(filas)
+            //        ) {
+            //        //db.Entry(item).Reference(p => p.ProductCategory).Load();
+            //        Console.WriteLine($"{item.ProductId} - {item.Name} ({item.ProductCategory.Name})");
+            //    }
+            //}
+            //List<Product> lista;
+            //using(var db = new AWContext()) {
+            //    lista = db.Products
+            //        .Where(p => p.ProductId < 800)
+            //        .OrderBy(p => p.ProductId)
+            //        .Skip(pagina * filas)
+            //        .Take(filas).ToList();
+            //}
+
+            //using(var db = new AWContext()) {
+            //    foreach(var item in lista) {
+            //        db.Entry(item).Reference(p => p.ProductCategory).Load();
+            //        Console.WriteLine($"{item.ProductId} - {item.Name} ({item.ProductCategory.Name})");
+            //    }
+            //}
+            using(var db = new AWContext()) {
                 foreach(var item in db.Products
+                    //.Include(p => p.ProductCategory)
+                    //.AsSplitQuery()
+                    //.Include(p => p.ProductModel)
+                    //.ThenInclude(m => m.ProductModelProductDescriptions)
+                    //.AsSplitQuery()
                     .Where(p => p.ProductId < 800)
                     .OrderBy(p => p.ProductId)
                     .Skip(pagina * filas)
                     .Take(filas)
+                    .Select(p => new { Id = p.ProductId, Nombre = p.Name.Mayusculas(), Categoria = p.ProductCategory.Name.ToUpper()  })
                     ) {
-                    Console.WriteLine($"{item.ProductId} - {item.Name}");
+                    //db.Entry(item).Reference(p => p.ProductCategory).Load();
+                    Console.WriteLine(item);
                 }
-            
             }
+
         }
         static void Colecciones(string[] args) {
             IList<Persona> lista = new List<Persona>();
@@ -389,6 +429,9 @@ namespace Ista.Utilidades {
         }
         public static bool EsPositivo(this int num) {
             return num > 0;
+        }
+        public static string Mayusculas(this string cad) {
+            return cad?.ToUpper();
         }
     }
 }
