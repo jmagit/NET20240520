@@ -193,22 +193,35 @@ namespace Ista.Consola {
             //        Console.WriteLine($"{item.ProductId} - {item.Name} ({item.ProductCategory.Name})");
             //    }
             //}
+            //using(var db = new AWContext()) {
+            //    foreach(var item in db.Products
+            //        //.Include(p => p.ProductCategory)
+            //        //.AsSplitQuery()
+            //        //.Include(p => p.ProductModel)
+            //        //.ThenInclude(m => m.ProductModelProductDescriptions)
+            //        //.AsSplitQuery()
+            //        .Where(p => p.ProductId < 800)
+            //        .OrderBy(p => p.ProductId)
+            //        .Skip(pagina * filas)
+            //        .Take(filas)
+            //        .Select(p => new { Id = p.ProductId, Nombre = p.Name.Mayusculas(), Categoria = p.ProductCategory.Name.ToUpper()  })
+            //        ) {
+            //        //db.Entry(item).Reference(p => p.ProductCategory).Load();
+            //        Console.WriteLine(item);
+            //    }
+            //}
             using(var db = new AWContext()) {
+                int ini = 800;
+                var sqlCmd = $"SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}";
+                sqlCmd = "SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > " + ini;
                 foreach(var item in db.Products
-                    //.Include(p => p.ProductCategory)
-                    //.AsSplitQuery()
-                    //.Include(p => p.ProductModel)
-                    //.ThenInclude(m => m.ProductModelProductDescriptions)
-                    //.AsSplitQuery()
-                    .Where(p => p.ProductId < 800)
-                    .OrderBy(p => p.ProductId)
-                    .Skip(pagina * filas)
-                    .Take(filas)
-                    .Select(p => new { Id = p.ProductId, Nombre = p.Name.Mayusculas(), Categoria = p.ProductCategory.Name.ToUpper()  })
+                    .FromSqlRaw($"SELECT TOP(10) * FROM[AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}")
                     ) {
                     //db.Entry(item).Reference(p => p.ProductCategory).Load();
-                    Console.WriteLine(item);
+                    Console.WriteLine($"{item.ProductId} - {item.Name}");
                 }
+
+                Console.WriteLine($"Productos: {db.Database.SqlQuery<int>($"SELECT count(*) as Value FROM [AdventureWorksLT2019].[SalesLT].[Product]").Single()}");
             }
 
         }
