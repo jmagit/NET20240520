@@ -13,7 +13,6 @@
 <#@ import namespace="Microsoft.EntityFrameworkCore" #>
 <#@ import namespace="Microsoft.EntityFrameworkCore.Design" #>
 <#@ import namespace="Microsoft.Extensions.DependencyInjection" #>
-<#@ import namespace="Ista.Dominio.Entidades.Core" #>
 <#
     // Template version: 800 - please do NOT remove this line
     if (EntityType.IsSimpleManyToManyJoinEntityType())
@@ -29,7 +28,8 @@
     var usings = new List<string>
     {
         "System",
-        "System.Collections.Generic"
+        "System.Collections.Generic",
+        "Ista.Dominio.Entidades.Core"
     };
 
     if (Options.UseDataAnnotations)

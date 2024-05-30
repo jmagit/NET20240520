@@ -161,6 +161,52 @@ namespace Ista.Consola {
 
     public class App {
         static void Main(string[] args) {
+            SQLite();
+            //EsValido();
+        }
+        static void EsValido() {
+            var p = new Product();
+            p.Color = new string('x', 60);
+            foreach(var err in p.GetValidationErrors())
+                Console.WriteLine(err.ErrorMessage);
+            var post = new Post();
+            foreach(var err in post.GetValidationErrors())
+                Console.WriteLine(err.ErrorMessage);
+            using(var db = new AWContext()) {
+                db.Products.Add(p);
+                //db.SaveChanges();
+            }
+        }
+        static void SQLite() {
+            using var db = new BloggingContext();
+
+            // Note: This sample requires the database to be created before running.
+            Console.WriteLine($"Database path: {db.DbPath}.");
+
+            // Create
+            Console.WriteLine("Inserting a new blog");
+            db.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
+            db.SaveChanges();
+
+            // Read
+            Console.WriteLine("Querying for a blog");
+            var blog = db.Blogs
+                .OrderBy(b => b.BlogId)
+                .First();
+
+            // Update
+            Console.WriteLine("Updating the blog and adding a post");
+            blog.Url = "https://devblogs.microsoft.com/dotnet";
+            blog.Posts.Add(
+                new Post { Title = "Hello World", Content = "I wrote an app using EF Core!" });
+            db.SaveChanges();
+
+            // Delete
+            Console.WriteLine("Delete the blog");
+            db.Remove(blog);
+            db.SaveChanges();
+        }
+        static void SQLServer() {
             int pagina = 1, filas = 10;
             //using(var db = new AWContext()) {
             //    foreach(var item in db.Products
@@ -211,15 +257,15 @@ namespace Ista.Consola {
             //    }
             //}
             using(var db = new AWContext()) {
-                int ini = 800;
-                var sqlCmd = $"SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}";
-                sqlCmd = "SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > " + ini;
-                foreach(var item in db.Products
-                    .FromSqlRaw($"SELECT TOP(10) * FROM[AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}")
-                    ) {
-                    //db.Entry(item).Reference(p => p.ProductCategory).Load();
-                    Console.WriteLine($"{item.ProductId} - {item.Name}");
-                }
+                //int ini = 800;
+                //var sqlCmd = $"SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}";
+                //sqlCmd = "SELECT TOP (10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > " + ini;
+                //foreach(var item in db.Products
+                //    .FromSql($"SELECT TOP(10) * FROM [AdventureWorksLT2019].[SalesLT].[Product] where productid > {ini}")
+                //    ) {
+                //    //db.Entry(item).Reference(p => p.ProductCategory).Load();
+                //    Console.WriteLine($"{item.ProductId} - {item.Name}");
+                //}
 
                 Console.WriteLine($"Productos: {db.Database.SqlQuery<int>($"SELECT count(*) as Value FROM [AdventureWorksLT2019].[SalesLT].[Product]").Single()}");
             }
@@ -426,25 +472,6 @@ namespace Ista.Consola {
         private static void App_Promocion(object sender, PromocionEventArgs e) {
             Console.WriteLine("Piede tipo de pieza");
             e.Pieza = new Dama((sender as Peon).Color);
-        }
-    }
-}
-namespace Ista.Utilidades {
-    public static class Validaciones {
-        public static bool EsBlanco(this string cad) {
-            return string.IsNullOrEmpty(cad?.Trim());
-        }
-        public static bool EsMuyLargo(this string cad, int longMax) {
-            return cad?.Length > longMax;
-        }
-        public static bool NoEsBlanco(this string cad) {
-            return !EsBlanco(cad);
-        }
-        public static bool EsPositivo(this int num) {
-            return num > 0;
-        }
-        public static string Mayusculas(this string cad) {
-            return cad?.ToUpper();
         }
     }
 }

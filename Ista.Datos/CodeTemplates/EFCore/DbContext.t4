@@ -30,7 +30,8 @@
     {
         "System",
         "System.Collections.Generic",
-        "Microsoft.EntityFrameworkCore"
+        "Microsoft.EntityFrameworkCore",
+        "System.Diagnostics"
     };
 
     if (NamespaceHint != Options.ModelNamespace
@@ -86,7 +87,7 @@ public partial class <#= Options.ContextName #> : DbContext
 <#
     }
 #>
-        => optionsBuilder<#= code.Fragment(providerCode.GenerateUseProvider(Options.ConnectionString), indent: 3) #>;
+        => optionsBuilder<#= code.Fragment(providerCode.GenerateUseProvider(Options.ConnectionString), indent: 3) #>.LogTo(msg => Debug.WriteLine(msg));
 
 <#
     }
