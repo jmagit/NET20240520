@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Ista.Dominio.Entidades.Core;
@@ -29,7 +28,6 @@ public partial class Product : EntityBase
     /// </summary>
     [Required]
     [StringLength(50)]
-    [Display(Name = "Nombre")]
     public string Name { get; set; }
 
     /// <summary>
@@ -108,6 +106,7 @@ public partial class Product : EntityBase
     /// Small image file name.
     /// </summary>
     [StringLength(50)]
+    [DataType(DataType.ImageUrl)]
     public string ThumbnailPhotoFileName { get; set; }
 
     /// <summary>

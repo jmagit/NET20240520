@@ -20,7 +20,7 @@ namespace Ista.Utilidades {
     }
     public static class ValidacionesPersonalizadas {
         public static ValidationResult NoEsBlanco(string cad) {
-            return cad.NoEsBlanco() ? ValidationResult.Success : new ValidationResult("No puede estar en blanco");
+            return (cad == null || cad.NoEsBlanco()) ? ValidationResult.Success : new ValidationResult("No puede estar en blanco");
         }
      }
 }

@@ -87,7 +87,8 @@ public partial class <#= Options.ContextName #> : DbContext
 <#
     }
 #>
-        => optionsBuilder<#= code.Fragment(providerCode.GenerateUseProvider(Options.ConnectionString), indent: 3) #>.LogTo(msg => Debug.WriteLine(msg));
+        => optionsBuilder<#= code.Fragment(providerCode.GenerateUseProvider(Options.ConnectionString), indent: 3) #>
+            .LogTo(msg => Debug.WriteLine(msg));
 
 <#
     }

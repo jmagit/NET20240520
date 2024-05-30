@@ -161,21 +161,25 @@ namespace Ista.Consola {
 
     public class App {
         static void Main(string[] args) {
-            SQLite();
-            //EsValido();
+            //SQLite();
+            EsValido();
         }
         static void EsValido() {
             var p = new Product();
             p.Color = new string('x', 60);
             foreach(var err in p.GetValidationErrors())
                 Console.WriteLine(err.ErrorMessage);
+            Console.WriteLine();
             var post = new Post();
-            foreach(var err in post.GetValidationErrors())
-                Console.WriteLine(err.ErrorMessage);
-            using(var db = new AWContext()) {
-                db.Products.Add(p);
-                //db.SaveChanges();
-            }
+            post.Title = "xx";
+            post.Content = "99";// new string('x', 260);
+            if(post.IsInvalid)
+                foreach(var err in post.GetValidationErrors())
+                    Console.WriteLine(err.ErrorMessage);
+            //using(var db = new AWContext()) {
+            //    db.Products.Add(p);
+            //    //db.SaveChanges();
+            //}
         }
         static void SQLite() {
             using var db = new BloggingContext();
@@ -185,6 +189,7 @@ namespace Ista.Consola {
 
             // Create
             Console.WriteLine("Inserting a new blog");
+            db.Add(new Blog { Url = "Esta se queda" });
             db.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
             db.SaveChanges();
 
