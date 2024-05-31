@@ -1,43 +1,77 @@
-﻿<UserControl x:Name="userControl" x:Class="Ista.Presentacion.WPF.Demo.Views.BlogView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ista.Presentacion.WPF.Demo"
+             xmlns:Converters="clr-namespace:Ista.Presentacion.WPF.Core.Converters;assembly=Ista.Presentacion.WPF.Core" x:Name="userControl" x:Class="Ista.Presentacion.WPF.Demo.Views.BlogView"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance local:BlogViewModel}">
-    <StackPanel Orientation="Vertical">
-        <TextBlock FontSize="20">Mantenimiento de <Bold>Blog</Bold></TextBlock>
+             d:DataContext="{d:DesignInstance {x:Type local:BlogViewModel}}">
+    <UserControl.Resources>
+        <Converters:InvertVisibilityConverter x:Key="InvertVisibilityConverter"/>
+        <Converters:NullToInvisibilityConverter x:Key="NullToInvisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical" Background="{DynamicResource FondoPrincipal}">
+        <TextBlock FontSize="20"><Run Text="Mantenimiento de "/><Bold><Run Text="Blog"/></Bold></TextBlock>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Grid.Column="1" Background="{DynamicResource FondoPrincipal}">
-                <Button Command="{Binding List, Mode=OneWay}">Carga</Button>
-                <Button Command="{Binding Add, Mode=OneWay}">Añadir</Button>
-                <Button>Ver</Button>
-                <Button Command="{Binding Modify, Mode=OneWay}" CommandParameter="9">Modificar</Button>
-                <Button>Borrar</Button>
+            <StackPanel x:Name="pnlComandos" Orientation="Vertical" Grid.Column="1" Background="{DynamicResource FondoPrincipal}" Visibility="{Binding IsList, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <!--<Button Command="{Binding List, Mode=OneWay}">Carga</Button>-->
+                <Button Command="{Binding Add, Mode=OneWay}" Content="Añadir"/>
+                <Button Command="{Binding View, Mode=OneWay}" CommandParameter="{Binding SelectedItem.BlogId, ElementName=blogLB}" Content="Ver" Visibility="{Binding SelectedItem, Converter={StaticResource NullToInvisibilityConverter}, ElementName=blogLB}"/>
+                <Button Command="{Binding Modify, Mode=OneWay}" CommandParameter="{Binding SelectedItem.BlogId, ElementName=blogLB}" Content="Modificar" Visibility="{Binding SelectedItem, Converter={StaticResource NullToInvisibilityConverter}, ElementName=blogLB}"/>
+                <Button Command="{Binding Delete, Mode=OneWay}" CommandParameter="{Binding SelectedItem.BlogId, ElementName=blogLB}" Content="Borrar" Visibility="{Binding SelectedItem, Converter={StaticResource NullToInvisibilityConverter}, ElementName=blogLB}"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <DataGrid x:Name="listadoGrid"  DataContext="{Binding Listado}" AutoGenerateColumns="True">
-                </DataGrid>
-                <ListBox ItemsSource="{Binding Listado}">
+                <TextBlock Text="Blog" FontWeight="Bold" FontStyle="Italic" FontSize="16" />
+                <ListBox x:Name="blogLB" ItemsSource="{Binding Listado}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Url}" />
+                            <TextBlock><Run Text="{Binding Url}" /><Run Text=" ["/><Run Text="{Binding BlogId}" /><Run Text="]"/></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock><Bold><Run Text="Elementos:"/></Bold><Run Text=" "/><Run Text="{Binding Listado.Count, Mode=OneWay}"/></TextBlock>
+                <TextBlock Text="Posts" FontWeight="Bold" FontStyle="Italic" FontSize="14" />
+                <ListBox x:Name="listBox" ItemsSource="{Binding SelectedItem.Posts, ElementName=blogLB}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
         </Grid>
-        <StackPanel DataContext="{Binding Elemento, Mode=OneWay}">
-            <Label Content="Url" />
-            <TextBox Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Command="{Binding DataContext.Save, ElementName=userControl}">Aceptar</Button>
+        <Border Margin="10" Padding="5" CornerRadius="10,10,10,10" BorderBrush="#FFAABD00">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF1FF00" Offset="0.997"/>
+                    <GradientStop Color="#FFFBFFB8" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel DataContext="{Binding Elemento, Mode=OneWay}">
+                <TextBlock Text="Añadir un nuevo Blog" FontSize="18" FontStyle="Italic" Visibility="{Binding DataContext.IsAdd, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=userControl}" />
+                <TextBlock Text="Modificar el Blog" FontSize="18" FontStyle="Italic" Visibility="{Binding DataContext.IsEdit, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=userControl}" />
+                <TextBlock x:Name="txtIsView" Text="Consultar el Blog" FontSize="18" FontStyle="Italic" Visibility="{Binding DataContext.IsView, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=userControl}" />
+                <Label Content="Url:" FontWeight="Bold" />
+                <TextBox Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGrid x:Name="postsGrid" ItemsSource="{Binding Posts}" Margin="0,5,0,0" AutomationProperties.IsRowHeader="True" AutoGenerateColumns="False" CanUserDeleteRows="True" CanUserAddRows="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Title}" Header="Título" MinWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Content}" Header="Contenido" MinWidth="400"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" Visibility="{Binding Visibility, Converter={StaticResource InvertVisibilityConverter}, ElementName=pnlComandos}">
+                    <Button Command="{Binding DataContext.Save, ElementName=userControl}" Margin="0,0,2,0" Content="Aceptar" Visibility="{Binding Visibility, Converter={StaticResource InvertVisibilityConverter}, ElementName=txtIsView}"/>
+                    <Button Command="{Binding DataContext.Cancel, ElementName=userControl}" Content="Cancelar"/>
+                </StackPanel>
 
-        </StackPanel>
+            </StackPanel>
+        </Border>
     </StackPanel>
 </UserControl>

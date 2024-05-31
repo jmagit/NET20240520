@@ -12,18 +12,31 @@ using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ista.Presentacion.WPF.Demo {
-    public enum Modo { List, Add, Edit, View, Delete }
+    public enum ModoCRUD { List, Add, Edit, View, Delete }
     public class BlogViewModel : ObservableClassBase {
         private Blog elemento = new Blog { Url = "Inicio" };
-        private Modo modo = Modo.List;
+        private ModoCRUD modo = ModoCRUD.List;
+        private ObservableCollection<Blog> listado;
 
-
-        public Modo Modo { get => modo; set { 
+        public ModoCRUD Modo { 
+            get => modo; set { 
                 modo = value;
                 OnPropertyChanged(nameof(Modo));
+                OnPropertyChanged(nameof(IsList));
+                OnPropertyChanged(nameof(IsAdd));
+                OnPropertyChanged(nameof(IsEdit));
+                OnPropertyChanged(nameof(IsView));
+                OnPropertyChanged(nameof(IsDelete));
             } 
         }
-        public ObservableCollection<Blog> Listado { get; private set; }
+        public bool IsList => modo == ModoCRUD.List;
+        public bool IsAdd => modo == ModoCRUD.Add;
+        public bool IsEdit => modo == ModoCRUD.Edit;
+        public bool IsView => modo == ModoCRUD.View;
+        public bool IsDelete => modo == ModoCRUD.Delete;
+        public ObservableCollection<Blog> Listado { 
+            get => listado; 
+            set { listado = value; OnPropertyChanged(nameof(Listado)); } }
         public Blog Elemento {
             get => elemento; private set {
                 if(elemento == value) return;
@@ -33,31 +46,30 @@ namespace Ista.Presentacion.WPF.Demo {
         }
         public BlogViewModel() {
             Elemento = new Blog { Url = "Inicio" };
-            //Listado = new ObservableCollection<Blog>([new Blog { Url = "Uno" }, new Blog { Url = "Dos" }, new Blog { Url = "Tres" }]);
+            Listado = new ObservableCollection<Blog>([new Blog { Url = "Uno" }, new Blog { Url = "Dos" }, new Blog { Url = "Tres" }]);
         }
 
 
         public ICommand List => new DelegateCommand(cmd => {
             using var db = new BloggingContext();
-            Listado = new ObservableCollection<Blog>(db.Blogs.ToList());
-            OnPropertyChanged(nameof(Listado));
-            Modo = Modo.List;
+            Listado = new ObservableCollection<Blog>(db.Blogs.Include(b => b.Posts).ToList());
+            Modo = ModoCRUD.List;
         });
 
         public ICommand Add => new DelegateCommand(cmd => {
             Elemento = new Blog { Url = "Nuevo"};
-            Modo = Modo.Add;
+            Modo = ModoCRUD.Add;
         });
 
         public ICommand Modify => new DelegateCommand(cmd => {
             using var db = new BloggingContext();
-            Elemento = db.Blogs.Where(item => item.BlogId == int.Parse(cmd.ToString())).FirstOrDefault();
-            Modo = Modo.Edit;
+            Elemento = db.Blogs.Include(b => b.Posts).Where(item => item.BlogId == int.Parse(cmd.ToString())).FirstOrDefault();
+            Modo = ModoCRUD.Edit;
         });
         public ICommand View => new DelegateCommand(cmd => {
             using var db = new BloggingContext();
-            Elemento = db.Blogs.Where(item => item.BlogId == int.Parse(cmd.ToString())).FirstOrDefault();
-            Modo = Modo.View;
+            Elemento = db.Blogs.Include(b => b.Posts).Where(item => item.BlogId == int.Parse(cmd.ToString())).FirstOrDefault();
+            Modo = ModoCRUD.View;
         });
         public ICommand Delete => new DelegateCommand(cmd => {
             using var db = new BloggingContext();
@@ -67,11 +79,16 @@ namespace Ista.Presentacion.WPF.Demo {
 
         public ICommand Save => new DelegateCommand(cmd => {
             using var db = new BloggingContext();
-            if(modo == Modo.Add)
+            if(modo == ModoCRUD.Add)
                 db.Blogs.Add(Elemento);
             else
                 db.Blogs.Update(Elemento);
             db.SaveChanges();
+            List.Execute(null);
+        });
+
+        public ICommand Cancel => new DelegateCommand(cmd => {
+            Elemento = null;
             List.Execute(null);
         });
 

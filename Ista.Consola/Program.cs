@@ -189,15 +189,21 @@ namespace Ista.Consola {
 
             // Create
             Console.WriteLine("Inserting a new blog");
-            db.Add(new Blog { Url = "Esta se queda" });
+            var blog = new Blog { Url = "http://example.com/ef" };
+            blog.Posts.Add(
+                new Post { Title = "Hello World", Content = "I wrote an app using EF Core!" });
+            blog.Posts.Add(
+                new Post { Title = "Hola mundo", Content = "Escrito usando una aplicación EF Core!" });
+
+            db.Add(blog);
             db.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
             db.SaveChanges();
 
             // Read
             Console.WriteLine("Querying for a blog");
-            var blog = db.Blogs
+            blog = db.Blogs
                 .OrderBy(b => b.BlogId)
-                .First();
+                .Last();
 
             // Update
             Console.WriteLine("Updating the blog and adding a post");

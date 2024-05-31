@@ -53,7 +53,7 @@ namespace Ista.Dominio.Entidades {
             }
         }
 
-        public List<Post> Posts { get; } = new();
+        public ObservableCollection<Post> Posts { get; } = new();
     }
 
     public class Post : EntityBase {

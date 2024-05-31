@@ -18,7 +18,9 @@ namespace Ista.Presentacion.WPF.Demo {
 
         public ICommand VerBlog => new DelegateCommand(cmd => {
             var vista = new BlogView();
-            vista.DataContext = new BlogViewModel();
+            var vm = new BlogViewModel();
+            vm.List.Execute(null);
+            vista.DataContext = vm;
             Host.Content = vista;
         });
 
