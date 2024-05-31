@@ -161,8 +161,8 @@ namespace Ista.Consola {
 
     public class App {
         static void Main(string[] args) {
-            //SQLite();
-            EsValido();
+            SQLite();
+            //EsValido();
         }
         static void EsValido() {
             var p = new Product();

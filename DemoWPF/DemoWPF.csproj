@@ -22,12 +22,15 @@
     <None Remove="Images\Ajedrez\reyn.gif" />
     <None Remove="Images\Ajedrez\torreb.gif" />
     <None Remove="Images\Ajedrez\torren.gif" />
+    <None Remove="Images\logo.png" />
     <None Remove="Images\MBlanco.jpg" />
     <None Remove="Images\MNegro.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AjedrezWin\AjedrezWin.csproj" />
     <ProjectReference Include="..\DemoSQLite\DemoSQLite.csproj" />
+    <ProjectReference Include="..\Ista.Presentacion.WPF.Core\Ista.Presentacion.WPF.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +46,7 @@
     <Resource Include="Images\Ajedrez\reyn.gif" />
     <Resource Include="Images\Ajedrez\torreb.gif" />
     <Resource Include="Images\Ajedrez\torren.gif" />
+    <SplashScreen Include="Images\logo.png" />
     <Resource Include="Images\MBlanco.jpg" />
     <Resource Include="Images\MNegro.jpg" />
   </ItemGroup>

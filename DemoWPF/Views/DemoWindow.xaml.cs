@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,15 +9,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AjedrezWin {
+namespace Ista.Presentacion.WPF.Demo {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window {
-
-        public MainWindow() {
+    public partial class DemoWindow : Window {
+        public DemoWindow() {
             InitializeComponent();
         }
 
+        private void button_Click(object sender, RoutedEventArgs e) {
+            lbDestino.Content = $"Hola {txtNombre.Text}";
+        }
     }
 }

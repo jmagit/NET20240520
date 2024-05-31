@@ -4,6 +4,7 @@ using Ista.Utilidades;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -30,9 +31,27 @@ namespace Ista.Infraestructura.Datos {
 namespace Ista.Dominio.Entidades {
 
     public class Blog : EntityBase {
-        public int BlogId { get; set; }
-        [Required][Url]
-        public string Url { get; set; }
+        private int blogId;
+        private string url;
+
+        public int BlogId {
+            get => blogId;
+            set {
+                if(blogId == value) return;
+                blogId = value;
+                OnPropertyChanged(nameof(BlogId));
+            }
+        }
+        [Required]
+        [Url]
+        public string Url {
+            get => url;
+            set {
+                if(url == value) return;
+                url = value;
+                OnPropertyChanged(nameof(Url));
+            }
+        }
 
         public List<Post> Posts { get; } = new();
     }
@@ -41,7 +60,7 @@ namespace Ista.Dominio.Entidades {
 
         public int PostId { get; set; }
         [Display(Name = "Título")]
-        [CustomValidation(typeof(ValidacionesPersonalizadas), nameof(ValidacionesPersonalizadas.NoEsBlanco), 
+        [CustomValidation(typeof(ValidacionesPersonalizadas), nameof(ValidacionesPersonalizadas.NoEsBlanco),
             ErrorMessage = "El título no puede estar en blanco.")]
         public string Title { get; set; }
         [Required]
